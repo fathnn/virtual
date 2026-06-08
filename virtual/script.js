@@ -156,8 +156,7 @@ function handleOfficerLogin(event) {
     event.preventDefault();
     console.log('Officer login form submitted');
     
-    const officerId = document.getElementById('officerId').value.trim();
-    const officerName = document.getElementById('officerName').value.trim();
+    const officerUserId = document.getElementById('officerUserId').value.trim();
     const officerPassword = document.getElementById('officerPassword').value;
     const cameraCheckbox = document.querySelector('#officerLoginForm input[name="camera"]');
     const microphoneCheckbox = document.querySelector('#officerLoginForm input[name="microphone"]');
@@ -166,30 +165,33 @@ function handleOfficerLogin(event) {
     const microphoneEnabled = microphoneCheckbox ? microphoneCheckbox.checked : true;
     
     // Validasi
-    if (!officerId) {
-        showNotification('Silakan masukkan ID Petugas', 'error');
-        return false;
-    }
-    
-    if (!officerName) {
-        showNotification('Silakan masukkan nama petugas', 'error');
+    if (!officerUserId) {
+        showNotification('Silakan masukkan User ID', 'error');
         return false;
     }
     
     if (!officerPassword) {
-        showNotification('Silakan masukkan kata sandi', 'error');
+        showNotification('Silakan masukkan password', 'error');
         return false;
     }
     
     if (officerPassword.length < 6) {
-        showNotification('Kata sandi minimal 6 karakter', 'error');
+        showNotification('Password minimal 6 karakter', 'error');
+        return false;
+    }
+    
+    // Validasi credentials (simulasi)
+    // TODO: Ganti dengan API call ke server untuk validasi
+    const validCredentials = validateOfficerCredentials(officerUserId, officerPassword);
+    
+    if (!validCredentials) {
+        showNotification('User ID atau password salah', 'error');
         return false;
     }
     
     const officerInfo = {
         role: 'officer',
-        id: officerId,
-        name: officerName,
+        userId: officerUserId,
         cameraEnabled: cameraEnabled,
         microphoneEnabled: microphoneEnabled,
         loginTime: new Date().toISOString(),
@@ -200,12 +202,32 @@ function handleOfficerLogin(event) {
     console.log('Saving officer info:', officerInfo);
     localStorage.setItem('voiceconnect_officer', JSON.stringify(officerInfo));
     
-    showNotification(`Selamat datang Petugas ${officerName}! Membuka dashboard...`, 'success');
+    showNotification(`Selamat datang Petugas ${officerUserId}! Membuka dashboard...`, 'success');
     
     setTimeout(() => {
         console.log('Redirecting to officer-dashboard.html');
         window.location.href = 'officer-dashboard.html';
     }, 1000);
+    
+    return false;
+}
+
+// ==================== Validate Officer Credentials ====================
+function validateOfficerCredentials(userId, password) {
+    // TODO: Ganti dengan API call ke server
+    // Ini adalah validasi dummy untuk testing
+    // Ganti dengan endpoint backend Anda
+    
+    // Contoh kredensial dummy (hapus di production)
+    const dummyUsers = {
+        'admin': 'admin123',
+        'petugas001': 'password123',
+        'petugas002': 'secure456'
+    };
+    
+    if (dummyUsers[userId] && dummyUsers[userId] === password) {
+        return true;
+    }
     
     return false;
 }
