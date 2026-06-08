@@ -278,7 +278,7 @@
         <div class="header">
             <div>
                 <div style="font-size: 1.2rem; font-weight: 600;">Dashboard Petugas</div>
-                <div style="font-size: 0.85rem; opacity: 0.7;" id="officerNameDisplay">Petugas</div>
+                <div style="font-size: 0.85rem; opacity: 0.7;" id="officerUserDisplay">Petugas</div>
             </div>
             <div style="display: flex; gap: 1rem; align-items: center;">
                 <div class="status-badge">
@@ -302,7 +302,7 @@
                 <div class="user-info-section">
                     <div class="user-avatar" id="officerAvatar">P</div>
                     <div class="user-details">
-                        <h4 id="officerName">Petugas</h4>
+                        <h4 id="officerUser">Petugas</h4>
                         <p id="officerId">ID</p>
                     </div>
                 </div>
@@ -377,13 +377,13 @@
                 return;
             }
 
-            const avatar = officerInfo.name.charAt(0).toUpperCase();
+            const avatar = officerInfo.userId.charAt(0).toUpperCase();
             document.getElementById('officerAvatar').textContent = avatar;
-            document.getElementById('officerName').textContent = officerInfo.name;
-            document.getElementById('officerId').textContent = officerInfo.id;
-            document.getElementById('officerNameDisplay').textContent = officerInfo.name;
+            document.getElementById('officerUser').textContent = officerInfo.userId;
+            document.getElementById('officerId').textContent = officerInfo.userId;
+            document.getElementById('officerUserDisplay').textContent = officerInfo.userId;
 
-            console.log('Officer info loaded:', officerInfo.name);
+            console.log('Officer info loaded:', officerInfo.userId);
         }
 
         // ==================== Check User Connection ====================
