@@ -333,44 +333,32 @@
             </div>
             <form class="modal-form" id="officerLoginForm" onsubmit="handleOfficerLogin(event)">
                 <div class="form-group">
-                    <label for="officerId">ID Petugas <span class="required">*</span></label>
+                    <label for="officerUserId">User ID <span class="required">*</span></label>
                     <input 
                         type="text" 
-                        id="officerId" 
-                        name="officerId"
-                        placeholder="Masukkan ID Petugas" 
+                        id="officerUserId" 
+                        name="officerUserId"
+                        placeholder="Masukkan User ID Anda" 
                         required
                     >
-                    <small>ID unik petugas dari sistem</small>
-                </div>
-                
-                <div class="form-group">
-                    <label for="officerName">Nama Petugas <span class="required">*</span></label>
-                    <input 
-                        type="text" 
-                        id="officerName" 
-                        name="officerName"
-                        placeholder="Masukkan nama lengkap Anda" 
-                        required
-                    >
-                    <small>Nama Anda yang akan ditampilkan</small>
+                    <small>User ID unik dari sistem</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="officerPassword">Kata Sandi <span class="required">*</span></label>
+                    <label for="officerPassword">Password <span class="required">*</span></label>
                     <div class="password-input-group">
                         <input 
                             type="password" 
                             id="officerPassword" 
                             name="officerPassword"
-                            placeholder="Masukkan kata sandi" 
+                            placeholder="Masukkan password Anda" 
                             required
                         >
                         <button type="button" class="password-toggle" onclick="togglePasswordVisibility()">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
-                    <small>Kata sandi petugas yang aman</small>
+                    <small>Password petugas yang aman</small>
                 </div>
 
                 <div class="form-options">
