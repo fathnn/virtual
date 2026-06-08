@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceConnect - Video Call Application</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-video"></i>
+                <span>VoiceConnect</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Beranda</a></li>
+                <li><a href="#features" class="nav-link">Fitur</a></li>
+                <li><a href="#how-it-works" class="nav-link">Cara Kerja</a></li>
+                <li><a href="#pricing" class="nav-link">Harga</a></li>
+                <li><a href="#contact" class="nav-link">Kontak</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn btn-primary-nav" onclick="openModal('user')">Pengguna</button>
+                <button class="btn btn-secondary-nav" onclick="openModal('officer')">Petugas</button>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">Terhubung dengan Orang Terkasih</h1>
+            <p class="hero-subtitle">Video call berkualitas HD dengan teknologi enkripsi terkini</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="openModal('user')">Mulai Video Call</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Pelajari Lebih Lanjut</button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>2.5M+</h3>
+                    <p>Pengguna Aktif</p>
+                </div>
+                <div class="stat">
+                    <h3>150+</h3>
+                    <p>Negara</p>
+                </div>
+                <div class="stat">
+                    <h3>99.9%</h3>
+                    <p>Uptime</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="video-preview">
+                <div class="video-grid">
+                    <div class="video-placeholder"></div>
+                    <div class="video-placeholder"></div>
+                    <div class="video-placeholder"></div>
+                    <div class="video-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Fitur Unggulan</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-hd"></i>
+                </div>
+                <h3>Video HD 1080p</h3>
+                <p>Kualitas video jernih dengan resolusi hingga 1080p untuk pengalaman terbaik</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Enkripsi End-to-End</h3>
+                <p>Privasi terjamin dengan enkripsi military-grade untuk semua percakapan</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Grup Hingga 100 Orang</h3>
+                <p>Lakukan meeting dengan banyak peserta tanpa mengorbankan kualitas</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-screen-users"></i>
+                </div>
+                <h3>Berbagi Layar</h3>
+                <p>Bagikan presentasi dan dokumen dengan mudah selama panggilan</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Rekam Panggilan</h3>
+                <p>Simpan rekaman video call untuk referensi di masa depan</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Multi-Platform</h3>
+                <p>Tersedia di Windows, Mac, iOS, dan Android dengan sinkronisasi sempurna</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">Cara Menggunakan</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Masukkan NIK & Nama</h3>
+                <p>Masukkan NIK dan nama lengkap Anda untuk memulai sesi video call</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Verifikasi Identitas</h3>
+                <p>Sistem akan memverifikasi identitas Anda untuk keamanan maksimal</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Mulai Panggilan</h3>
+                <p>Terhubung dengan petugas dan nikmati video call berkualitas tinggi</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <h2 class="section-title">Paket Harga</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Gratis</h3>
+                <p class="price">Rp 0</p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Panggilan hingga 30 menit</li>
+                    <li><i class="fas fa-check"></i> Hingga 2 peserta</li>
+                    <li><i class="fas fa-check"></i> Video HD</li>
+                    <li><i class="fas fa-times"></i> Perekaman disimpan 7 hari</li>
+                </ul>
+                <button class="btn btn-secondary" onclick="openModal('user')">Mulai Gratis</button>
+            </div>
+            <div class="pricing-card featured">
+                <span class="badge">Populer</span>
+                <h3>Premium</h3>
+                <p class="price">Rp 79.000<span>/bulan</span></p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Panggilan tanpa batas</li>
+                    <li><i class="fas fa-check"></i> Hingga 50 peserta</li>
+                    <li><i class="fas fa-check"></i> Video hingga 4K</li>
+                    <li><i class="fas fa-check"></i> Perekaman disimpan 1 bulan</li>
+                </ul>
+                <button class="btn btn-primary" onclick="openModal('user')">Mulai Premium</button>
+            </div>
+            <div class="pricing-card">
+                <h3>Bisnis</h3>
+                <p class="price">Rp 299.000<span>/bulan</span></p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Semua fitur Premium</li>
+                    <li><i class="fas fa-check"></i> Hingga 100 peserta</li>
+                    <li><i class="fas fa-check"></i> Support prioritas 24/7</li>
+                    <li><i class="fas fa-check"></i> Analytics & reporting</li>
+                </ul>
+                <button class="btn btn-secondary" onclick="openModal('user')">Hubungi Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Siap untuk Terhubung?</h2>
+            <p>Mulai video call tanpa registrasi ribet. Hanya masukkan NIK dan nama Anda</p>
+            <button class="btn btn-light" onclick="openModal('user')">Mulai Sekarang</button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Hubungi Kami</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>support@voiceconnect.com</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Telepon</h3>
+                    <p>+62 800-000-0000</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Lokasi</h3>
+                    <p>Jakarta, Indonesia</p>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <input type="text" placeholder="Nama Anda" required>
+                <input type="email" placeholder="Email Anda" required>
+                <textarea placeholder="Pesan Anda" rows="5" required></textarea>
+                <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>VoiceConnect</h4>
+                <p>Platform video call modern untuk komunikasi yang lebih baik</p>
+            </div>
+            <div class="footer-section">
+                <h4>Produk</h4>
+                <ul>
+                    <li><a href="#features">Fitur</a></li>
+                    <li><a href="#pricing">Harga</a></li>
+                    <li><a href="#">Unduh Aplikasi</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Karir</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Ikuti Kami</h4>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VoiceConnect. Semua hak dilindungi.</p>
+            <div class="footer-links">
+                <a href="#">Privasi</a>
+                <a href="#">Syarat Layanan</a>
+                <a href="#">Cookie</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal untuk Login Pengguna -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('user')">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-user"></i>
+                <h2>Masuk sebagai Pengguna</h2>
+            </div>
+            <form class="modal-form" id="userLoginForm" onsubmit="handleUserLogin(event)">
+                <div class="form-group">
+                    <label for="userNik">NIK (Nomor Induk Kependudukan) <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="userNik" 
+                        name="userNik"
+                        placeholder="Masukkan 16 digit NIK" 
+                        maxlength="16"
+                        required
+                    >
+                    <small>Masukkan 16 digit angka dari KTP Anda</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userName">Nama Lengkap <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="userName" 
+                        name="userName"
+                        placeholder="Masukkan nama lengkap Anda" 
+                        required
+                    >
+                    <small>Nama yang akan ditampilkan saat video call</small>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="camera" checked>
+                        Aktifkan kamera
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="microphone" checked>
+                        Aktifkan mikrofon
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large">Masuk ke Video Call</button>
+                <p class="form-note">NIK dan nama akan digunakan untuk verifikasi keamanan</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal untuk Login Petugas -->
+    <div id="officerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('officer')">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-user-tie"></i>
+                <h2>Masuk sebagai Petugas</h2>
+            </div>
+            <form class="modal-form" id="officerLoginForm" onsubmit="handleOfficerLogin(event)">
+                <div class="form-group">
+                    <label for="officerId">ID Petugas <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="officerId" 
+                        name="officerId"
+                        placeholder="Masukkan ID Petugas" 
+                        required
+                    >
+                    <small>ID unik petugas dari sistem</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="officerName">Nama Petugas <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="officerName" 
+                        name="officerName"
+                        placeholder="Masukkan nama lengkap Anda" 
+                        required
+                    >
+                    <small>Nama Anda yang akan ditampilkan</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="officerPassword">Kata Sandi <span class="required">*</span></label>
+                    <div class="password-input-group">
+                        <input 
+                            type="password" 
+                            id="officerPassword" 
+                            name="officerPassword"
+                            placeholder="Masukkan kata sandi" 
+                            required
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <small>Kata sandi petugas yang aman</small>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="camera" checked>
+                        Aktifkan kamera
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="microphone" checked>
+                        Aktifkan mikrofon
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large">Masuk Dashboard Petugas</button>
+                <p class="form-note">Hanya untuk petugas terdaftar. Data Anda dilindungi dengan aman.</p>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

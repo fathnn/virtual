@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call Pengguna - VoiceConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            overflow: hidden;
+        }
+
+        .video-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            grid-template-rows: 1fr auto;
+            height: 100vh;
+            gap: 0;
+            background: #000;
+        }
+
+        .main-video {
+            grid-column: 1;
+            grid-row: 1 / 3;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-feed {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .video-icon {
+            font-size: 5rem;
+            opacity: 0.2;
+            margin-bottom: 2rem;
+        }
+
+        .video-status {
+            font-size: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .remote-video {
+            grid-column: 2;
+            grid-row: 1;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .remote-video-placeholder {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .remote-icon {
+            font-size: 2.5rem;
+            opacity: 0.2;
+            margin-bottom: 1rem;
+        }
+
+        .remote-status {
+            font-size: 0.85rem;
+            opacity: 0.4;
+            text-align: center;
+        }
+
+        .user-info {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .user-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-details h4 {
+            margin: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-details p {
+            margin: 0.25rem 0 0;
+            font-size: 0.7rem;
+            opacity: 0.6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(0,0,0,0.5), transparent);
+            z-index: 10;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .call-timer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .device-status {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .device-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            transition: background 0.3s ease;
+        }
+
+        .device-light.off {
+            background: #6b7280;
+        }
+
+        .controls {
+            grid-column: 1 / 3;
+            grid-row: 2;
+            background: linear-gradient(180deg, transparent, rgba(0,0,0,0.8));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem 1.5rem;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .control-btn.primary {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+
+        .control-btn.primary:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .control-btn.primary.off {
+            background: #ef4444;
+        }
+
+        .control-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .control-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .control-btn.end {
+            background: #ef4444;
+            width: 70px;
+            height: 70px;
+            font-size: 1.8rem;
+        }
+
+        .control-btn.end:hover {
+            background: #dc2626;
+        }
+
+        .user-info-section {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 120px 80px;
+            }
+
+            .main-video {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .remote-video {
+                grid-column: 1;
+                grid-row: 2;
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                height: 120px;
+            }
+
+            .controls {
+                grid-column: 1;
+                grid-row: 3;
+                gap: 1rem;
+            }
+
+            .control-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .control-btn.end {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span id="statusText">Menghubungkan...</span>
+                </div>
+            </div>
+            <div class="call-timer" id="callTimer">00:00</div>
+        </div>
+
+        <!-- Main Video (Pengguna) -->
+        <div class="main-video">
+            <div class="video-feed">
+                <div class="video-placeholder">
+                    <div class="video-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="video-status">Video Anda</div>
+                </div>
+            </div>
+            <div class="user-info-section">
+                <div class="user-avatar" id="userAvatarMain">U</div>
+                <div class="user-details">
+                    <h4 id="userNameMain">Pengguna</h4>
+                    <p id="userRoleMain">ID</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remote Video (Petugas) -->
+        <div class="remote-video">
+            <div class="remote-video-placeholder">
+                <div class="remote-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="remote-status" id="remoteStatus">Menunggu Petugas...</div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatarRemote">-</div>
+                <div class="user-details">
+                    <h4 id="userNameRemote">-</h4>
+                    <p id="userRoleRemote">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="control-btn primary" id="micBtn" onclick="toggleMicrophone()">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="control-btn primary" id="cameraBtn" onclick="toggleCamera()">
+                <i class="fas fa-video"></i>
+            </button>
+            <button class="control-btn secondary" onclick="shareScreen()">
+                <i class="fas fa-share-square"></i>
+            </button>
+            <button class="control-btn end" onclick="endCall()">
+                <i class="fas fa-phone-slash"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let callStartTime = null;
+        let callTimer = null;
+        let isMicrophoneOn = true;
+        let isCameraOn = true;
+
+        // ==================== Initialize ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('User video page loaded');
+            initializeVideoCall();
+            startCallTimer();
+            checkOfficerConnection();
+        });
+
+        // ==================== Initialize Video Call ====================
+        function initializeVideoCall() {
+            const userInfo = JSON.parse(localStorage.getItem('voiceconnect_user'));
+            if (!userInfo) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const avatar = userInfo.name.charAt(0).toUpperCase();
+            document.getElementById('userAvatarMain').textContent = avatar;
+            document.getElementById('userNameMain').textContent = userInfo.name;
+            document.getElementById('userRoleMain').textContent = userInfo.nik;
+
+            isMicrophoneOn = userInfo.microphoneEnabled;
+            isCameraOn = userInfo.cameraEnabled;
+
+            if (!isMicrophoneOn) {
+                document.getElementById('micBtn').classList.add('off');
+            }
+            if (!isCameraOn) {
+                document.getElementById('cameraBtn').classList.add('off');
+            }
+
+            console.log('User info loaded:', userInfo.name);
+        }
+
+        // ==================== Check Officer Connection ====================
+        function checkOfficerConnection() {
+            const checkInterval = setInterval(() => {
+                const officerInfo = JSON.parse(localStorage.getItem('voiceconnect_officer'));
+                if (officerInfo) {
+                    clearInterval(checkInterval);
+                    connectOfficer(officerInfo);
+                }
+            }, 500);
+
+            setTimeout(() => clearInterval(checkInterval), 15000);
+        }
+
+        // ==================== Connect Officer ====================
+        function connectOfficer(officerInfo) {
+            const avatar = officerInfo.name.charAt(0).toUpperCase();
+            document.getElementById('userAvatarRemote').textContent = avatar;
+            document.getElementById('userNameRemote').textContent = officerInfo.name;
+            document.getElementById('userRoleRemote').textContent = officerInfo.id;
+            document.getElementById('remoteStatus').textContent = 'Petugas Terhubung';
+            document.getElementById('statusText').textContent = 'Terhubung';
+            
+            console.log('Officer connected:', officerInfo.name);
+        }
+
+        // ==================== Call Timer ====================
+        function startCallTimer() {
+            callStartTime = Date.now();
+            callTimer = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
+                const mins = Math.floor(elapsed / 60);
+                const secs = elapsed % 60;
+                document.getElementById('callTimer').textContent = 
+                    `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // ==================== Toggle Microphone ====================
+        function toggleMicrophone() {
+            isMicrophoneOn = !isMicrophoneOn;
+            document.getElementById('micBtn').classList.toggle('off');
+            console.log('Microphone:', isMicrophoneOn ? 'ON' : 'OFF');
+        }
+
+        // ==================== Toggle Camera ====================
+        function toggleCamera() {
+            isCameraOn = !isCameraOn;
+            document.getElementById('cameraBtn').classList.toggle('off');
+            console.log('Camera:', isCameraOn ? 'ON' : 'OFF');
+        }
+
+        // ==================== Share Screen ====================
+        function shareScreen() {
+            alert('Fitur berbagi layar sedang dalam pengembangan');
+        }
+
+        // ==================== End Call ====================
+        function endCall() {
+            if (confirm('Akhiri panggilan?')) {
+                clearInterval(callTimer);
+                localStorage.removeItem('voiceconnect_user');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
